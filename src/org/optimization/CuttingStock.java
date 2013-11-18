@@ -28,9 +28,19 @@ public class CuttingStock {
 		return map;
 	}
 	
-	public CuttingStock(int max,int block[],int quantity[])
+	public CuttingStock(int max,int block[],int quantity[]) throws InvalidLegthException,InvalidParameterException
 	  {    
-	    
+	    for(int i=0;i<block.length;i++)
+	    {
+	    	if(block[i]>max)
+	    	{
+	    		throw new InvalidLegthException();
+	    	}
+	    }
+	    if(block.length!=quantity.length)
+	    {
+	    	throw new InvalidLegthException();
+	    }
 		this.total=block.length;
 	    this.max=max;
 	    this.block=block;
