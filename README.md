@@ -24,21 +24,21 @@ Using this library is simple. Here is a simple example
 ------------------------------------------------------
 Output will be
 ------------------------------------------------------
-Combination no 1
-250  *  6
-500  *  1
+	Combination no 1
+	250  *  6
+	500  *  1
 
-Combination no 2
-700  *  1
-500  *  1
-380  *  2
+	Combination no 2
+	700  *  1
+	500  *  1
+	380  *  2
 
-Combination no 3
-700  *  1
-500  *  1
-380  *  2
+	Combination no 3
+	700  *  1
+	500  *  1
+	380  *  2
 
-Combination no 4
-700  *  2
-380  *  1
+	Combination no 4
+	700  *  2
+	380  *  1
 ------------------------------------------------------
