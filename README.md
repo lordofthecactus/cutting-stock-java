@@ -1,6 +1,7 @@
 This java library solves cutting stock problem using greedy approach.
 Greedy approach may not give the optimal solution but gives an acceptable solution quickly.
-Using this library is simple. Here is a simple example
+Using this library is simple.
+Here is a simple example
 ------------------------------------------------------
 	public static void main(String[] args) {
 
