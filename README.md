@@ -17,6 +17,7 @@ Java Code
 ------------------------------------------------------
 	import java.util.Map;
 	import java.util.Map.Entry;
+	import org.optimization.CuttingStock;
 	
 	public class MainClass {
 
