@@ -9,7 +9,7 @@ And I want pieces example
 
 	700(mm) * 4 pieces
 	500(mm) * 3 pieces
-	250(mm) * 4 pieces
+	250(mm) * 6 pieces
 	320(mm) * 5 pieces
 To cut this efficiently by minimizing the waste, here is the code.
 
