@@ -1,79 +1,54 @@
 package org.optimization;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class CuttingStock {
 	
 	private int block[],qty[],comb[],tempcomb[],limit[];
 	@SuppressWarnings("unused")
 	private int max,total,counter=0,waste=0;
-	private List<Map<Integer,Integer>> mapList=new ArrayList<Map<Integer, Integer>>();
-	private List<Integer> store=new ArrayList<Integer>();
+	private ArrayList<Map<Integer,Integer>> mapList=new ArrayList<>();
+	private List<Integer> store;
 	private int count=0;
 	
 	public boolean hasMoreCombinations()
 	{
-		if(count<counter)
-			return true;
-		else
-			return false;
+		return count<counter;
 	}
 	public synchronized Map<Integer, Integer> nextCombination()
 	{
-		Map<Integer, Integer> map=mapList.get(count);
-		count++;
-		return map;
+			Map<Integer, Integer> map = mapList.get(count);
+			count++;
+			return map;
 	}
 	
 	public CuttingStock(int max,int block[],int quantity[]) throws InvalidLegthException,InvalidParameterException
 	{
 		Arrays.stream(block).forEach((p) ->{
-			if (p > max) {
-				throw new InvalidLegthException();
-			}
+			if (p > max)
+			throw new InvalidLegthException();
 		});
 
 	    if(block.length!=quantity.length)
-	    {
 	    	throw new InvalidLegthException();
-	    }
+
+		store=new ArrayList<>();
 		this.total=block.length;
 	    this.max=max;
 	    this.block=block;
 		this.qty=quantity;
-		this.doIt();
+		this.initialize();
 	  }
-	private void doIt()
-	    {
-	      this.initialize();
-	      /*for(int i=0;i<stock.size();i++)
-			{
-	    	  for(int j=0;j<stock.get(i).comb.length;j++)
-	    	  {
-	    		if(stock.get(i).comb[j]>0)
-				System.out.println(block[j]+"  *  "+this.stock.get(i).comb[j]);
-	    	  }
-			}*/
-	    }
+
 	private void initialize()
 	  {
-	    store=new ArrayList<Integer>();
-	    waste=0;
-	    counter=0;
 	    this.sort();
 	    this.calculate(store);
-	    /*wast_array=store.toArray();
-	    if(wast_array.length>0)
-	    {
-	      System.out.println("Consider reusing the following remains");    
-	      for(int i=wast_array.length-1;i>=0;i--)
-	      {
-	        System.out.println((this.counter+i-wast_array.length+1)+" "+wast_array[i]);
-	      }
-	      //out.println("</table><br><br>");
-	    }
-	    System.out.println("No of pieces req = "+this.counter);    
-	    System.out.println("Waste = "+this.waste);*/
+		  Object[] wast_array = store.toArray();
+	      System.out.println("Consider reusing the following remains");
+		  Arrays.stream(wast_array).forEach((p) ->{ System.out.println("-> "+ p); });
+		  System.out.println("No of pieces req = "+this.counter +"\n" + "Waste = "+this.waste);
 	  }
 	  private void sort()
 	  {
@@ -98,6 +73,7 @@ public class CuttingStock {
 	      }
 	    }while(swap);
 	  }
+
 	  private void calculate(List<Integer> store)
 	  {
 	    initLimit();
@@ -174,40 +150,32 @@ public class CuttingStock {
 	        else if(i==total-1 && qty[i]==0)
 	          start=false;
 	        break;
-	      }/*//out.println("After start loop");                            // DELETE IT
-	     for(int i=0;i<total;i++)                                         ////////
-	          //out.print(qty[i]);                                 /////////
-	     //out.println(); */                                            //////////
+	      }
 	    }
 	  }
+
 	  private void showComb(int a, List<Integer>store )
 	  {
 		counter++;
 		
 	    boolean flag=false;
-	    //out.println("<font color=\"brown\">=====================================</font><br>Piece no "+counter+"<br>----------<br>");
 	    if(a==0)
 	    {
 	    	Map<Integer, Integer> tempMap = new HashMap<Integer, Integer>();
 	      for(int i=0;i<total;i++)
 	        if(comb[i]!=0)
 	        {
-	            tempMap.put(new Integer(block[i]), new Integer(comb[i]));
-	        	//System.out.println(block[i]+"  *  "+comb[i]);
+	            tempMap.put(block[i], comb[i]);
 	        	qty[i]=qty[i]-comb[i]; //  deduct samples from stock(qty) which are already printed
-	        	if((qty[i]-comb[i])<0)
-	        	{
-	        		flag=true; // to return and not recursively call.
-	        	}
 	        }
-	      
-	            
+			flag=true;
+
 			  if(flag)
 			  {
 				  mapList.add(tempMap);
 				  return;
 			  }
-			  showComb(0,store);
+			  //showComb(0,store);
 	    }
 	    else
 	    {
@@ -215,7 +183,7 @@ public class CuttingStock {
 	      for(int i=0;i<total;i++)
 	        if(tempcomb[i]!=0)
 	        {
-		         tempMap.put(new Integer(block[i]), new Integer(tempcomb[i]));
+		         tempMap.put(block[i], tempcomb[i]);
 	        	 //System.out.println(block[i]+"  ggg  "+tempcomb[i]);
 	        }
 	      mapList.add(tempMap); 
@@ -236,6 +204,7 @@ public class CuttingStock {
 			  showComb(a,store);
 	    }
 	  }
+
 	  private void combinations()
 	  {
 	      for(int i=total-1;;)
@@ -257,6 +226,7 @@ public class CuttingStock {
 	        }
 	      }
 	  }
+
 	  private void initLimit()
 	  {
 	    int div;
@@ -270,6 +240,7 @@ public class CuttingStock {
 		    limit[i]=qty[i];
 	    }
 	  }
+
 	  private void updateLimit()
 	  {
 	    for(int i=0;i<total;i++)
@@ -278,9 +249,10 @@ public class CuttingStock {
 		    limit[i]=qty[i];
 		}
 	  }
+
 	  private void resetComb()
 	  {
-	    for(int i=0;i<total;i++) // reset comb[]
+	    for(int i=0;i<total;i++)
 	      comb[i]=0;
 	  }
 
