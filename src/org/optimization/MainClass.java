@@ -7,9 +7,9 @@ import java.util.Map.Entry;
 
 		public static void main(String[] args) {
 
-			int blocks[]={700,500,250,380};
-			int quantities[]={4,3,6,5};
-			int i=0,max_size=2000;
+			int blocks[]={225,175, 20,60, 25, 420, 50, 950};
+			int quantities[]={2,2,2,2, 4, 2, 4, 2};
+			int i=0,max_size=1000;
 			Map<Integer, Integer> map;
 		    CuttingStock cuttingStock= new CuttingStock(max_size,blocks,quantities);
 			while(cuttingStock.hasMoreCombinations())
